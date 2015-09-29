@@ -1,0 +1,3 @@
+arcanys_sso_auth_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: ArcanysSSOAuthBundle:Default:index }

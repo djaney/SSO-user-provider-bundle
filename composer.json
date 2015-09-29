@@ -1,0 +1,22 @@
+{
+    "name": "arcanys/sso-auth-bundle",
+    "description" : "A bundle that Arcanys will use to connect to SSO Provider",
+    "type" : "symfony-bundle",
+    "require": {
+        "onelogin/php-saml": "^2.6"
+    },
+    "authors": [
+        {
+            "name": "Djane Rey Mabelin",
+            "email": "d.mabelin@arcanys.com"
+        }
+    ],
+    "license" : [
+        "MIT"
+    ],
+    "autoload" : {
+        "psr-0" : {
+            "Arcanys\\SSOAuthBundle" : ""
+        }
+    }
+}
