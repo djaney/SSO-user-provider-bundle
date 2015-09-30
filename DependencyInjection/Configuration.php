@@ -24,9 +24,12 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('sp')
                     ->children()
-                        ->scalarNode('entity_id')->end()
-                        ->scalarNode('assertion_consumer_service')->end()
-                        ->scalarNode('single_logout_service')->end()
+                        ->scalarNode('base_url')->end()
+                        // ->scalarNode('entity_id')->end()
+                        // ->scalarNode('assertion_consumer_service')->end()
+                        // ->scalarNode('single_logout_service')->end()
+                        // ->scalarNode('cert')->end()
+                        // ->scalarNode('private_key')->end()
                     ->end()
                 ->end()
                 ->arrayNode('idp')
@@ -36,6 +39,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('single_logout_service')->end()
                         ->scalarNode('cert')->end()
                     ->end()
+                ->end()
             ->end()
         ;
 

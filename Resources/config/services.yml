@@ -8,4 +8,8 @@ services:
 
     arcanys_sso_auth.saml2:
         class:  Arcanys\SSOAuthBundle\Service\Saml2
-        arguments: [ @service_container ]
+        arguments: [ %arcanys_sso_auth%, @router ]
+
+    arcanys_sso_auth.saml2_metadata_facade:
+        class:  Arcanys\SSOAuthBundle\Service\Saml2MetadataFacade
+        arguments: [ %arcanys_sso_auth%, @router ]

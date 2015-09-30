@@ -1,3 +1,12 @@
-arcanys_sso_auth_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: ArcanysSSOAuthBundle:Default:index }
+arcanys_sso_auth_metadata:
+    path:     /metadata
+    defaults: { _controller: ArcanysSSOAuthBundle:Sp:metadata }
+
+
+arcanys_sso_auth_acs:
+    path:     /metadata
+    defaults: { _controller: ArcanysSSOAuthBundle:Sp:acs }
+
+arcanys_sso_auth_sls:
+    path:     /metadata
+    defaults: { _controller: ArcanysSSOAuthBundle:Sp:sls }

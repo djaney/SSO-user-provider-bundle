@@ -1,6 +1,6 @@
 <?php namespace Arcanys\SSOAuthBundle\Service;
 
-class Saml2 extends \OneLogin_Saml2_Auth{
+class Saml2MetadataFacade extends \OneLogin_Saml2_Settings{
     public function __construct($config){
 
         $settings = array (
@@ -19,19 +19,19 @@ class Saml2 extends \OneLogin_Saml2_Auth{
                 // 'privateKey' > $config['sp']['private_key'],
             ),
 
-            'idp' => array (
-                'entityId' => $config['idp']['entity_id'],
-                'singleSignOnService' => array (
-                    'url' => $config['idp']['single_signon_service'],
-                    'binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
-                ),
-                'singleLogoutService' => array (
-                    'url' => $config['idp']['single_logout_service'],
-                    'binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
-                ),
-                'x509cert' => $config['idp']['cert'],
-            ),
         );
-        parent::__construct($settings);
+        parent::__construct($settings, true);
+    }
+    public function getMetadata(){
+        $metadata = $this->getSPMetadata();
+        $errors = $this->validateMetadata($metadata);
+        if (empty($errors)) {
+            return $metadata;
+        } else {
+            throw new \OneLogin_Saml2_Error(
+                'Invalid SP metadata: '.implode(', ', $errors),
+                OneLogin_Saml2_Error::METADATA_SP_INVALID
+            );
+        }
     }
 }

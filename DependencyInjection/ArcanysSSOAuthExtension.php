@@ -24,5 +24,10 @@ class ArcanysSSOAuthExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        $config['sp']['entity_id'] = $config['sp']['base_url'] . '/metadata';
+        $config['sp']['acs'] = $config['sp']['base_url'] . '/acs';
+        $config['sp']['sls'] = $config['sp']['base_url'] . '/sls';
+        $container->setParameter('arcanys_sso_auth',$config);
     }
 }

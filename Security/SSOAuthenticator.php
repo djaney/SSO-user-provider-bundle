@@ -13,7 +13,7 @@ class SSOAuthenticator implements SimplePreAuthenticatorInterface
 {
     private $saml2;
     public function __construct(Saml2 $saml2){
-        $this->$saml2 = $saml2;
+        $this->saml2 = $saml2;
     }
     public function createToken(Request $request, $providerKey)
     {
@@ -36,6 +36,7 @@ class SSOAuthenticator implements SimplePreAuthenticatorInterface
         // TODO this secret is useless
         $secret = $token->getCredentials();
         // TODO Username should be from SSO provider
+        $this->saml2->login();
         $username = 'admin';
 
 
