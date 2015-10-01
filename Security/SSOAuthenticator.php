@@ -12,8 +12,10 @@ use Arcanys\SSOAuthBundle\Service\Saml2;
 class SSOAuthenticator implements SimplePreAuthenticatorInterface
 {
     private $saml2;
-    public function __construct(Saml2 $saml2){
+    private $session;
+    public function __construct(Saml2 $saml2,$session){
         $this->saml2 = $saml2;
+        $this->session = $session;
     }
     public function createToken(Request $request, $providerKey)
     {
@@ -33,11 +35,17 @@ class SSOAuthenticator implements SimplePreAuthenticatorInterface
 
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
     {
+
         // TODO this secret is useless
         $secret = $token->getCredentials();
         // TODO Username should be from SSO provider
-        $this->saml2->login();
-        $username = 'admin';
+        $userData = $this->session->get('arcanys_sso_auth.user_data');
+        if($userData){
+            $username = reset($userData['uid']);
+        }else{
+            $this->saml2->login();
+            exit;
+        }
 
 
         if (!$username) {

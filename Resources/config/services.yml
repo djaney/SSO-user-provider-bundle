@@ -4,7 +4,7 @@ services:
 #        arguments: [@service_id, "plain_value", %parameter%]
     arcanys_sso_auth.sso_authenticator:
         class:  Arcanys\SSOAuthBundle\Security\SSOAuthenticator
-        arguments: [ @arcanys_sso_auth.saml2 ]
+        arguments: [ @arcanys_sso_auth.saml2, @session ]
 
     arcanys_sso_auth.saml2:
         class:  Arcanys\SSOAuthBundle\Service\Saml2
