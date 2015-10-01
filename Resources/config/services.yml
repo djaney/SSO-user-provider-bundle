@@ -5,7 +5,7 @@ services:
     arcanys_sso_auth.sso_authenticator:
         class:  Arcanys\SSOAuthBundle\Security\SSOAuthenticator
         arguments: [ @arcanys_sso_auth.saml2, @session ]
-
+        public: false
     arcanys_sso_auth.saml2:
         class:  Arcanys\SSOAuthBundle\Service\Saml2
         arguments: [ %arcanys_sso_auth%, @router ]
@@ -17,3 +17,4 @@ services:
     arcanys_sso_auth.user_provider:
         class: Arcanys\SSOAuthBundle\Security\User\SSOUserProvider
         arguments: [%arcanys_sso_auth%,  @doctrine ]
+        public: false

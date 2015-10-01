@@ -32,6 +32,8 @@ class SpController extends Controller
         $session = $this->get('session');
 
         $session->getFlashBag()->set('arcanys_sso_auth.user_data', $auth->getAttributes());
+        $session->getFlashBag()->set('arcanys_sso_auth.name_id', $auth->getNameId());
+        $session->getFlashBag()->set('arcanys_sso_auth.session_index', $auth->getSessionIndex());
 
         if ($req->request->get('RelayState') && \OneLogin_Saml2_Utils::getSelfURL() != $req->request->get('RelayState')) {
             // $auth->redirectTo($req->request->get('RelayState'));
