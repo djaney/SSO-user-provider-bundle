@@ -31,10 +31,7 @@ class SpController extends Controller
         }
         $session = $this->get('session');
 
-        $session->set('arcanys_sso_auth.user_data', $auth->getAttributes());
-        $session->set('arcanys_sso_auth.name_id', $auth->getNameId());
-        $session->set('arcanys_sso_auth.session_index', $auth->getSessionIndex());
-        // var_dump($session->all());exit;
+        $session->getFlashBag()->set('arcanys_sso_auth.user_data', $auth->getAttributes());
 
         if ($req->request->get('RelayState') && \OneLogin_Saml2_Utils::getSelfURL() != $req->request->get('RelayState')) {
             // $auth->redirectTo($req->request->get('RelayState'));
@@ -42,12 +39,15 @@ class SpController extends Controller
         }
     }
 
-    public function slsAction()
+    public function slsAction(Request $req)
     {
+        $auth = $this->get('arcanys_sso_auth.saml2');
         $auth->processSLO();
         $errors = $auth->getErrors();
         if (empty($errors)) {
-            die('Tarung ug logout SpController');
+            $this->get('security.token_storage')->setToken(null);
+            $req->getSession()->invalidate();
+            return $this->redirect('/');
         } else {
             throw new \Exception(implode(', ', $errors));
         }

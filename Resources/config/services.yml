@@ -13,3 +13,7 @@ services:
     arcanys_sso_auth.saml2_metadata_facade:
         class:  Arcanys\SSOAuthBundle\Service\Saml2MetadataFacade
         arguments: [ %arcanys_sso_auth%, @router ]
+
+    arcanys_sso_auth.user_provider:
+        class: Arcanys\SSOAuthBundle\Security\User\SSOUserProvider
+        arguments: [%arcanys_sso_auth%,  @doctrine ]

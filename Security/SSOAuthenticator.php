@@ -36,12 +36,17 @@ class SSOAuthenticator implements SimplePreAuthenticatorInterface
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
     {
 
-        // TODO this secret is useless
+
         $secret = $token->getCredentials();
-        // TODO Username should be from SSO provider
-        $userData = $this->session->get('arcanys_sso_auth.user_data');
+        $userData = $this->session->getFlashBag()->get('arcanys_sso_auth.user_data');
         if($userData){
+            // TODO create mapping config in the future
             $username = reset($userData['uid']);
+            $email = reset($userData['email']);
+            $firstname = reset($userData['firstname']);
+            $lastname = reset($userData['lastname']);
+            $roles = $userData['rights'];
+            if(!$roles) $roles = ['ROLE_USER'];
         }else{
             $this->saml2->login();
             exit;
@@ -51,19 +56,20 @@ class SSOAuthenticator implements SimplePreAuthenticatorInterface
         if (!$username) {
             throw new AuthenticationException("Failed to authenticate from SSO");
         }
-        try{
-            $user = $userProvider->loadUserByUsername($username);
-        }catch(UsernameNotFoundException $e){
-            // TODO create event dispatcher where you can add user if it does not exist
-            throw new UsernameNotFoundException();
-        }
 
+        $user = $userProvider->loadUserByUsername([
+            'username'=>$username,
+            'email'=>$email,
+            'firstname'=>$firstname,
+            'lastname'=>$lastname,
+            'roles'=>$roles,
+        ]);
 
         return new PreAuthenticatedToken(
             $user,
             $secret,
             $providerKey,
-            $user->getRoles()
+            $user->getRoles($roles)
         );
     }
 
