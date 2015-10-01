@@ -47,8 +47,6 @@ class SpController extends Controller
         $auth->processSLO();
         $errors = $auth->getErrors();
         if (empty($errors)) {
-            $this->get('security.token_storage')->setToken(null);
-            $req->getSession()->invalidate();
             return $this->redirect('/');
         } else {
             throw new \Exception(implode(', ', $errors));

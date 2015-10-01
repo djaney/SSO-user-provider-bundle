@@ -18,3 +18,7 @@ services:
         class: Arcanys\SSOAuthBundle\Security\User\SSOUserProvider
         arguments: [%arcanys_sso_auth%,  @doctrine ]
         public: false
+
+    arcanys_sso_auth.authentication_handler:
+        class: Arcanys\SSOAuthBundle\Security\User\AuthenticationHandler
+        arguments: [ @arcanys_sso_auth.saml2 ]

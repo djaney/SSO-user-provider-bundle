@@ -44,6 +44,7 @@ class SSOUserProvider implements UserProviderInterface
 
     public function refreshUser(UserInterface $user)
     {
+        // throw new UnsupportedUserException();
         return $this->loadUserByUsername($user->getUsername());
     }
 
