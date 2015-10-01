@@ -19,8 +19,12 @@ class SSOUserProvider implements UserProviderInterface
 
     public function loadUserByUsername($userData)
     {
+        if(is_array($userData)){
+            $user = $this->doctrine->getRepository($this->class)->findOneByUsername($userData['username']);
+        }else{
+            $user = $this->doctrine->getRepository($this->class)->findOneByUsername($userData);
+        }
 
-        $user = $this->doctrine->getRepository($this->class)->findOneByUsername($userData['username']);
 
         if (!$user) {
             $user = new $this->class();
