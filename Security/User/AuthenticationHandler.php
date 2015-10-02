@@ -13,7 +13,7 @@ class AuthenticationHandler implements LogoutSuccessHandlerInterface
     {
         // $this->get('security.context')->setToken(null);
         $request->getSession()->invalidate();
-        // $this->saml2->logout();
+        $this->saml2->logout();
         $referer = $request->headers->get('referer','/');
         return new RedirectResponse($referer);
     }
