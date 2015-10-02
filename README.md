@@ -28,12 +28,14 @@
                 single_logout_service: http://myidp.com/SingleLogoutService.php
             cert: ~
 1. Add Routes
+
         sso_endpoint:
             resource: "@ArcanysSSOAuthBundle/Resources/config/routing.yml"
             prefix:   /sp # service provider path
         logout:
             path: /logout
 1. Add security configurations
+
         security:
             ...
             firewalls:
