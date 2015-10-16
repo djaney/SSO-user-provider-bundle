@@ -2,7 +2,7 @@
 1. Add to composer.json
 
         "require": {
-        "djaney/SSO-user-provider-bundle": "dev-master"
+            "arcanys/sso-auth-bundle": "dev-master"
         },
         "repositories": [
         {
