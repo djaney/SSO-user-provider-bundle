@@ -15,8 +15,8 @@
         "MIT"
     ],
     "autoload" : {
-        "psr-0" : {
-            "Arcanys\\SSOAuthBundle" : ""
+        "psr-4" : {
+            "Arcanys\\SSOAuthBundle\\" : ""
         }
     }
 }
