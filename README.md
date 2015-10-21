@@ -26,7 +26,7 @@
                 entity_id: http://example.com/metadata.php
                 single_signon_service: http://myidp.com/SSOService.php
                 single_logout_service: http://myidp.com/SingleLogoutService.php
-            cert: ~
+                cert: ~
 1. Add Routes
 
         sso_endpoint:
@@ -37,6 +37,10 @@
 1. Add security configurations
 
         security:
+            ...
+            providers:
+                sso_provider:
+                    id: arcanys_sso_auth.user_provider
             ...
             firewalls:
                 main:
