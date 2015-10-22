@@ -28,16 +28,21 @@ class SSOUserProvider implements UserProviderInterface
 
         if (!$user) {
             $user = new $this->class();
-
-            $user->setUsername($userData['username']);
-            $user->setEmail($userData['email']);
-            $user->setFirstname($userData['firstname']);
-            $user->setLastname($userData['lastname']);
-            $user->setRoles($userData['roles']);
-
             $this->doctrine->getManager()->persist($user);
-            $this->doctrine->getManager()->flush();
         }
+        if(isset($userData['username']))
+            $user->setUsername($userData['username']);
+        if(isset($userData['email']))
+            $user->setEmail($userData['email']);
+        if(isset($userData['firstname']))
+            $user->setFirstname($userData['firstname']);
+        if(isset($userData['lastname']))
+            $user->setLastname($userData['lastname']);
+        if(isset($userData['roles']))
+            $user->setRoles($userData['roles']);
+        
+        $this->doctrine->getManager()->flush();
+        
         return $user;
 
     }
