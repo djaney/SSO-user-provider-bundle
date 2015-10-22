@@ -25,10 +25,10 @@ class SSOUserProvider implements UserProviderInterface
             $user = $this->doctrine->getRepository($this->class)->findOneByUsername($userData);
         }
 
-
+        $new = false;
         if (!$user) {
             $user = new $this->class();
-            $this->doctrine->getManager()->persist($user);
+            $new = true;
         }
         if(isset($userData['username']))
             $user->setUsername($userData['username']);
@@ -40,6 +40,10 @@ class SSOUserProvider implements UserProviderInterface
             $user->setLastname($userData['lastname']);
         if(isset($userData['roles']))
             $user->setRoles($userData['roles']);
+        
+       if($new){
+           $this->doctrine->getManager()->persist($user);
+       }
         
         $this->doctrine->getManager()->flush();
         
