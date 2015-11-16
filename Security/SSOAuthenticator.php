@@ -35,8 +35,6 @@ class SSOAuthenticator implements SimplePreAuthenticatorInterface
 
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
     {
-
-
         $secret = $token->getCredentials();
         $userData = $this->session->getFlashBag()->get('arcanys_sso_auth.user_data');
         if($userData){
@@ -45,6 +43,7 @@ class SSOAuthenticator implements SimplePreAuthenticatorInterface
             $email = reset($userData['email']);
             $firstname = reset($userData['firstname']);
             $lastname = reset($userData['lastname']);
+            $token = reset($userData['token']);
             $roles = $userData['rights'];
             if(!$roles) $roles = ['ROLE_USER'];
         }else{
@@ -62,6 +61,7 @@ class SSOAuthenticator implements SimplePreAuthenticatorInterface
             'email'=>$email,
             'firstname'=>$firstname,
             'lastname'=>$lastname,
+            'token'=>$token,
             'roles'=>$roles,
         ]);
 
