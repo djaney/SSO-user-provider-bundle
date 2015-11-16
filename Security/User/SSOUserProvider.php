@@ -30,22 +30,21 @@ class SSOUserProvider implements UserProviderInterface
             $user = new $this->class();
             $new = true;
         }
-        if(isset($userData['username']))
-            $user->setUsername($userData['username']);
-        if(isset($userData['email']))
-            $user->setEmail($userData['email']);
-        if(isset($userData['firstname']))
-            $user->setFirstname($userData['firstname']);
-        if(isset($userData['lastname']))
-            $user->setLastname($userData['lastname']);
-        if(isset($userData['roles']))
-            $user->setRoles($userData['roles']);
-        if(isset($userData['token']))
-            $user->setToken($userData['token']);
         
-       if($new){
-           $this->doctrine->getManager()->persist($user);
-       }
+        foreach ($userData as $name => $value) {
+            $set_method = 'set'.ucfirst($name);
+            $get_method = 'get'.ucfirst($name);            
+            if (method_exists($user, $set_method) && method_exists($user, $get_method)) {
+                if($user->$get_method() != $value) {
+                    $user->$set_method($value);
+                    $new = true;
+                }
+            }            
+        }
+                        
+        if($new){
+            $this->doctrine->getManager()->persist($user);
+        }
         
         $this->doctrine->getManager()->flush();
         
