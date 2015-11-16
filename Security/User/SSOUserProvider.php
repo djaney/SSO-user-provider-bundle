@@ -40,6 +40,8 @@ class SSOUserProvider implements UserProviderInterface
             $user->setLastname($userData['lastname']);
         if(isset($userData['roles']))
             $user->setRoles($userData['roles']);
+        if(isset($userData['token']))
+            $user->setToken($userData['token']);
         
        if($new){
            $this->doctrine->getManager()->persist($user);
