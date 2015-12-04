@@ -46,6 +46,7 @@ class SSOAuthenticator implements SimplePreAuthenticatorInterface
             $token = reset($userData['token']);
             $roles = $userData['rights'];
             if(!$roles) $roles = ['ROLE_USER'];
+            $working_hours = reset($userData['working_hours']);
         }else{
             $this->saml2->login();
             exit;
@@ -63,6 +64,7 @@ class SSOAuthenticator implements SimplePreAuthenticatorInterface
             'lastname'=>$lastname,
             'token'=>$token,
             'roles'=>$roles,
+            'working_hours'=>$working_hours
         ]);
 
         return new PreAuthenticatedToken(
