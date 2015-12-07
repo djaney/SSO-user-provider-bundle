@@ -64,7 +64,7 @@ class SSOAuthenticator implements SimplePreAuthenticatorInterface
             'lastname'=>$lastname,
             'token'=>$token,
             'roles'=>$roles,
-            'working_hours'=>$working_hours
+            'workingHours'=>$working_hours
         ]);
 
         return new PreAuthenticatedToken(
