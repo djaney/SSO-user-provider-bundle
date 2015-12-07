@@ -31,15 +31,17 @@ class SSOUserProvider implements UserProviderInterface
             $new = true;
         }
         
-        foreach ($userData as $name => $value) {
-            $set_method = 'set'.ucfirst($name);
-            $get_method = 'get'.ucfirst($name);            
-            if (method_exists($user, $set_method) && method_exists($user, $get_method)) {
-                if($user->$get_method() != $value) {
-                    $user->$set_method($value);
-                    $new = true;
-                }
-            }            
+        if(is_array($userData)){
+            foreach ($userData as $name => $value) {
+                $set_method = 'set'.ucfirst($name);
+                $get_method = 'get'.ucfirst($name);            
+                if (method_exists($user, $set_method) && method_exists($user, $get_method)) {
+                    if($user->$get_method() != $value) {
+                        $user->$set_method($value);
+                        $new = true;
+                    }
+                }            
+            }
         }
                         
         if($new){
