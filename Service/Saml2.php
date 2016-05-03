@@ -34,7 +34,7 @@ class Saml2 extends \OneLogin_Saml2_Auth{
         );
         parent::__construct($settings);
     }
-    public function logout($returnTo = null, $parameters = array(), $nameId = null, $sessionIndex = null){
-        parent::logout($returnTo, $parameters, $nameId, $sessionIndex);
+    public function logout($returnTo = null, $parameters = array(), $nameId = null, $sessionIndex = null, $stay=false){
+        parent::logout($returnTo, $parameters, $nameId, $sessionIndex, $stay);
     }
 }
